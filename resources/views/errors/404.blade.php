@@ -36,7 +36,7 @@
         }
 
         .text h1 {
-            color: #00c2cb;
+            color: #000000;
             font-size: 35px;
             font-weight: 700;
             margin-bottom: 15px;
@@ -44,7 +44,7 @@
 
         .text p {
             font-size: 15px;
-            color: #e0ffff;
+            color: #000000;
             margin-bottom: 15px;
             line-height: 1.5rem;
             margin-bottom: 15px;
@@ -90,7 +90,7 @@
         .menu li a {
             display: flex;
             font-size: 1rem;
-            color: #00c2cb;
+            color: #000000;
             transition: 0.1s;
         }
     </style>
