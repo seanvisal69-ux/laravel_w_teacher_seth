@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
@@ -66,32 +67,75 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('product.show')->with('product', $product);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $categories = array();
+        foreach (Category::all() as $category) {
+            $categories[$category->id] = $category->name;
+        }
+        $product = Product::findOrFail($id);
+        return view('product.edit')->with('product', $product)->with('categories', $categories);
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:20|min:3',
+            'category_id' => 'required|integer',
+            'price' => 'required|max:20|min:3',
+            'image' => 'mimes:jpg,jpeg,png,gif',
+            'description' => 'required|max:1000|min:10',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('product/' . $id . '/edit')
+                ->withInput()
+                ->withErrors($validator);
+        }
+        $product = Product::find($id);
+        // Create The Post
+        if ($request->file('image') != "") {
+            $image = $request->file('image');
+            $upload = 'img/';
+            $filename = time() . $image->getClientOriginalName();
+            move_uploaded_file($image->getPathName(), $upload . $filename);
+        }
+
+        $product->name = $request->Input('name');
+        $product->category_id = $request->Input('category_id');
+        $product->price = $request->Input('price');
+        if (isset($filename)) {
+            if($product->image !=""){
+                File::delete('img/'.$product->image);
+            }
+            $product->image = $filename;
+        }
+
+        $product->description = $request->Input('description');
+        $product->save();
+
+        Session::flash('product_update', 'Data is updated');
+        return redirect('product/' . $product->id . '/edit');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $image_path = 'img/'.$product->image;
+        File::delete($image_path);
+        $product->delete();
+        Session::flash('product_delete','Data is deleted.');
+        return redirect('product');
     }
 }
