@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
@@ -96,3 +97,7 @@ Route::get('/product/{product}', [ProductController::class, 'show'])->name('prod
 Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
 Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
 Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update');
+
+Route::get('/', [FrontendController::class, 'index']);
+Route::get('/list',[FrontendController::class,'list']);
+Route::get('/show/{id}',[FrontendController::class,'show']);
