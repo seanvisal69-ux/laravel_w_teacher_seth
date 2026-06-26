@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\SensorsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+
 
 
 Route::get('/', function () {
@@ -100,3 +102,7 @@ Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name(
 Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update');
 
 Route::resource('sensor', SensorsController::class);
+
+Route::get('/', [FrontendController::class, 'index']);
+Route::get('/list',[FrontendController::class,'list']);
+Route::get('/show/{id}',[FrontendController::class,'show']);
