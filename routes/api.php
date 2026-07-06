@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FrontendController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PostController;
@@ -22,3 +23,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/dashboard', [AuthController::class, 'dashboard']); 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout'); 
 });
+
+Route::get('/search', [FrontendController::class,'getBySearch']);
+Route::get('/frontend/{category?}', [FrontendController::class,'getByCategory']);
