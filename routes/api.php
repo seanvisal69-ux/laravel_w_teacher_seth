@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\PaymentController;
+// use Faker\Provider\ar_EG\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PostController;
@@ -26,3 +28,5 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/search', [FrontendController::class,'getBySearch']);
 Route::get('/frontend/{category?}', [FrontendController::class,'getByCategory']);
+
+Route::post('/create-payment-intent', [PaymentController::class, 'createPaymentIntent']);
