@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\PostController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -15,10 +15,10 @@ Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')
 Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
-Route::post('/register', [AuthController::class, 'register']); 
-Route::post('/login', [AuthController::class, 'login'])->name('login'); 
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login'])->name('api.login');
 
-Route::middleware('auth:sanctum')->group(function () { 
-    Route::get('/dashboard', [AuthController::class, 'dashboard']); 
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout'); 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/dashboard', [AuthController::class, 'dashboard']);
+    Route::post('/logout', [AuthController::class, 'logout'])->name('api.logout');
 });

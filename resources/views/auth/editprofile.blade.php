@@ -14,7 +14,7 @@
                                         aria-hidden="true">&times</span></button>
                             </div>
                         @endif
-                        <form method="POST" action="{{ route('profile.update', $user) }}">
+                        <form method="POST" action="{{ route('profile.update', auth()->user()) }}">
                             @csrf
                             @method('PATCH')
 
