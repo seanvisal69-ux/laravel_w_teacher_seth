@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PostController;
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [AuthController::class, 'dashboard']); 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout'); 
 });
+Route::post('/create-payment-intent', [PaymentController::class, 'createPaymentIntent']); 
