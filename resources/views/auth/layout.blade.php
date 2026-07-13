@@ -68,7 +68,7 @@
 
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
+                            <a class="nav-link" href="{{ route('login.page') }}">Login</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('register') }}">Register</a>
@@ -84,8 +84,11 @@
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{!! url('/dashboard') !!}">Profile</a>
-                                <a class="dropdown-item" href="{{route('profile.edit', $user)}}">Update profile</a>
-                                <a class="dropdown-item" href="{{route('form.password')}}">Change password</a>
+                                @auth
+                                    <a class="dropdown-item" href="{{ route('profile.edit', auth()->user()) }}">Update
+                                        profile</a>
+                                    <a class="dropdown-item" href="{{ route('form.password') }}">Change password</a>
+                                @endauth
                             </div>
                         </li>
                     @endguest
